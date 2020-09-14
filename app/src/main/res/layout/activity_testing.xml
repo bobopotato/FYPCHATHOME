@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        />
+
+    <com.google.android.material.navigation.NavigationView
+        app:headerLayout="@layout/header"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        app:itemTextColor="@android:color/darker_gray"
+        app:itemIconTint="@color/color1"
+        app:menu="@menu/sidemenu"
+        android:layout_gravity="start"
+
+        ></com.google.android.material.navigation.NavigationView>
+
+
+
+</RelativeLayout>

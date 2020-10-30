@@ -6,4 +6,6 @@
 
     <color name="color1">#00aaff</color>
     <color name="color2">#005bea</color>
+    <color name="light_grey">#e4e4e4</color>
+    <color name="black">#000000</color>
 </resources>

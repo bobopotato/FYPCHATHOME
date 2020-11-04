@@ -32,7 +32,8 @@ class HomeAdapter(val property : MutableList<Property>): RecyclerView.Adapter<Ho
         var img_user: ImageView = itemView.findViewById<ImageView>(R.id.imgProfile);
         var img_property: ImageView = itemView.findViewById<ImageView>(R.id.imgProperty);
         var txt_dateTime:TextView=itemView.findViewById<TextView>(R.id.txtDateTime);
-
+        var txt_propertyType:TextView=itemView.findViewById<TextView>(R.id.txtPropertyType);
+        var txt_rentalType:TextView=itemView.findViewById<TextView>(R.id.txtRentalType);
 
     }
 
@@ -49,11 +50,13 @@ class HomeAdapter(val property : MutableList<Property>): RecyclerView.Adapter<Ho
         holder.txt_dateTime.text=property[position].releaseDateTime
         holder.txt_location.text=property[position].location
         if(property[position].rentalType.toString().equals("long")) {
-            holder.txt_price.text = "RM"+property[position].price.toString()+"/month"
+            holder.txt_price.text = "RM"+property[position].price.toString()+"/MONTH"
         }else{
-            holder.txt_price.text = "RM"+property[position].price.toString()+"/day"
+            holder.txt_price.text = "RM"+property[position].price.toString()+"/DAY"
         }
-        holder.txt_propertyName.text=property[position].propertyName
+        holder.txt_propertyType.text="Property Type: "+property[position].propertyType.toString()
+        holder.txt_rentalType.text="Rental Type: "+property[position].rentalType.toString()+" term"
+        holder.txt_propertyName.text="Property Name: "+property[position].propertyName.toString()
         ref= FirebaseDatabase.getInstance().getReference("Users")
 
         ref.addValueEventListener(object: ValueEventListener {
@@ -65,8 +68,8 @@ class HomeAdapter(val property : MutableList<Property>): RecyclerView.Adapter<Ho
                 if(snapshot.exists()){
                     for(h in snapshot.children){
                         if(h.child("userID").getValue().toString().equals(property[position].userID)){
-                            holder.txt_username.text=h.child("fullName").getValue().toString()
-                            Picasso.get().load(h.child("image").getValue().toString()).into(holder.img_user)
+                            holder.txt_username.text=h.child("username").getValue().toString()
+                            Picasso.get().load(h.child("image").getValue().toString()).placeholder(R.drawable.ic_profile).into(holder.img_user)
                         }
 
                     }
@@ -85,8 +88,8 @@ class HomeAdapter(val property : MutableList<Property>): RecyclerView.Adapter<Ho
                 if(snapshot.exists()){
 
                     for(h in snapshot.children){
-                        if(h.child("propertyID").getValue().toString().equals(property[position].PropertyID) && h.child("ImageName").getValue().toString().equals("image1")){
-                            Picasso.get().load(h.child("ImageSource").getValue().toString()).into(holder.img_property)
+                        if(h.child("propertyID").getValue().toString().equals(property[position].propertyID) && h.child("imageName").getValue().toString().equals("image1")){
+                            Picasso.get().load(h.child("imageSource").getValue().toString()).placeholder(R.drawable.ic_home).into(holder.img_property)
                         }
                     }
                 }
@@ -96,7 +99,8 @@ class HomeAdapter(val property : MutableList<Property>): RecyclerView.Adapter<Ho
 
         holder.img_property.setOnClickListener{
             val intent = Intent(holder.img_property.context, detailPost::class.java)
-            intent.putExtra("selectedPosition", property[position].PropertyID)
+            intent.putExtra("selectedPosition", property[position].propertyID)
+            intent.putExtra("selectedUserID",property[position].userID)
             holder.img_property.context.startActivity(intent)
         }
 

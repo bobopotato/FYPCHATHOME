@@ -8,4 +8,6 @@
     <color name="color2">#005bea</color>
     <color name="light_grey">#e4e4e4</color>
     <color name="black">#000000</color>
+    <color name="hollo_blue_light">#33b5e5</color>
+    <color name="light_blue">#2a9df4</color>
 </resources>

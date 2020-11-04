@@ -30,7 +30,7 @@ class HomeFragment : Fragment() {
 
         propertyList = mutableListOf()
 
-        addToList()
+        addToList(root)
 
 
 
@@ -39,7 +39,7 @@ class HomeFragment : Fragment() {
     }
 
 
-    private fun addToList(){
+    private fun addToList(root:View){
         ref = FirebaseDatabase.getInstance().getReference("Property")
         ref.addValueEventListener(object:ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
@@ -50,18 +50,20 @@ class HomeFragment : Fragment() {
                 if(snapshot.exists()){
                     propertyList.clear()
                     for (h in snapshot.children){
-                        val property = h.getValue(Property::class.java)
-                        propertyList.add(property!!)
-                        //Log.d(tag,propertyList.toString())
+                        if(h.child("status").getValue().toString().equals("available")) {
+                            val property = h.getValue(Property::class.java)
+                            propertyList.add(property!!)
+                            //Log.d(tag,propertyList.toString())
+                        }
 
                     }
 
                     val mLayoutManager = LinearLayoutManager(context)
                     mLayoutManager.reverseLayout = true
 
-                    recycler_view.layoutManager = mLayoutManager
-                    recycler_view.scrollToPosition(propertyList.size-1)
-                    recycler_view.adapter = HomeAdapter(propertyList)
+                    root.recycler_view.layoutManager = mLayoutManager
+                    root.recycler_view.scrollToPosition(propertyList.size-1)
+                    root.recycler_view.adapter = HomeAdapter(propertyList)
                 }
             }
 

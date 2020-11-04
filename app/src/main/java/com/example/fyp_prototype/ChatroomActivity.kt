@@ -3,7 +3,12 @@ package com.example.fyp_prototype
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
+import com.example.fyp_prototype.Adapter.chatViewPagerAdapter
+import com.example.fyp_prototype.Adapter.fragmentAdapter
+import kotlinx.android.synthetic.main.activity_chatroom.*
+import kotlinx.android.synthetic.main.activity_detail_post.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.toolbar
 
 class ChatroomActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,5 +18,8 @@ class ChatroomActivity : AppCompatActivity() {
         setSupportActionBar(toolbar as Toolbar?)
         supportActionBar?.setTitle("Chatroom")
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        viewPagerChat.adapter= chatViewPagerAdapter(supportFragmentManager)
+        tabLayoutChat.setupWithViewPager(viewPagerChat)
     }
 }
